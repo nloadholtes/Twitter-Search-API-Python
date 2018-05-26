@@ -206,7 +206,7 @@ class TwitterSearchImpl(TwitterSearch):
             if tweet['created_at'] is not None:
                 t = datetime.datetime.fromtimestamp((tweet['created_at']/1000))
                 fmt = "%Y-%m-%d %H:%M:%S"
-                log.info("%i [%s] - %s" % (self.counter, t.strftime(fmt), tweet['text']))
+                log.info("%i\t%s\t\"%s\"" % (self.counter, t.strftime(fmt), tweet['text']))
 
             # When we've reached our max limit, return False so collection stops
             if self.max_tweets is not None and self.counter >= self.max_tweets:
@@ -251,7 +251,7 @@ class TwitterSlicer(TwitterSearch):
             if tweet['created_at'] is not None:
                 t = datetime.datetime.fromtimestamp((tweet['created_at']/1000))
                 fmt = "%Y-%m-%d %H:%M:%S"
-                log.info("%i [%s] - %s" % (self.counter, t.strftime(fmt), tweet['text']))
+                log.info("%i\t%s\t\"%s\"" % (self.counter, t.strftime(fmt), tweet['text']))
 
         return True
 
@@ -259,7 +259,7 @@ class TwitterSlicer(TwitterSearch):
 if __name__ == '__main__':
     log.basicConfig(level=log.INFO)
 
-    search_query = "Babylon 5"
+    search_query = "remoteok.io from:levelsio"
     rate_delay_seconds = 0
     error_delay_seconds = 5
 
@@ -268,8 +268,8 @@ if __name__ == '__main__':
     twit.search(search_query)
 
     # Example of using TwitterSlice
-    select_tweets_since = datetime.datetime.strptime("2016-10-01", '%Y-%m-%d')
-    select_tweets_until = datetime.datetime.strptime("2016-12-01", '%Y-%m-%d')
+    select_tweets_since = datetime.datetime.strptime("2014-10-01", '%Y-%m-%d')
+    select_tweets_until = datetime.datetime.strptime("2018-12-01", '%Y-%m-%d')
     threads = 10
 
     twitSlice = TwitterSlicer(rate_delay_seconds, error_delay_seconds, select_tweets_since, select_tweets_until,
